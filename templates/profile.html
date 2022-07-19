@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+
+{% block style %}
+<style>
+    .graphic{
+        display: flex;
+        align-items: center;
+        width: 6rem;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    img{
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Image</th>
+        <th scope="col">Upload date</th>
+        <th scope="col">Result</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    {% for i in user.imagebase_set.all %}
+    <tbody>
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td><div class="graphic"><img src="{{ i.image.url }}" alt="No vex"></div></td>
+        <td class="text-capitalise">{{ i.upload_date }}</td>
+        <td class="text-capitalise">{{ i.mel_class }}</td>
+      </tr>
+
+    </tbody>
+  {% endfor %}
+
+  </table>
+
+
+    
+{% endif %}
+
+
+
+{% endblock %}

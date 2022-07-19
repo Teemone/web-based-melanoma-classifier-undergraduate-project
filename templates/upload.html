@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Document</title>
+
+
+    {% block style %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+        
+        body{
+            height: 100vh;
+            background: #eee;
+        }
+
+        .alert{
+            margin: auto;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        .something{
+            font-family: 'Roboto', sans-serif;
+
+        }
+
+        .nunito{
+            font-family: 'Nunito', sans-serif;
+
+        }
+
+        nav + .container{
+            height: 80vh ;
+        }
+
+        .landing{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .landing-2{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .other{
+            display: flex;
+            flex-direction: column;
+            margin-top: 2.5rem;
+            width: 80%;
+        }
+
+        .img{
+            display: flex;
+            width: 80%;
+            height: 40%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .img img{
+            width: 100%;
+        }
+
+        .other input, .other button, .other a{
+            width: 100%;
+        }
+
+
+        /* MEDIA QUERY */
+        @media (min-width:991px)  { 
+            .alert{
+                margin-top: 1rem;
+                width: 80%;
+            }
+
+            .landing-2{
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                width: 80%;
+            }
+
+            .other{
+                display: flex;
+                justify-content: center;
+                margin: 0;
+                width: 100%;
+                
+            }
+
+           
+            .img{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+                width: 100%;
+                overflow: hidden;
+                border-radius: 10px;    
+
+            }
+
+            .img img{
+                width: 80%;
+            }
+        }
+
+    </style>
+    {% endblock %}
+
+    
+
+</head>
+<body>
+
+    <div class="container">
+
+        {% block content %}
+        <div class="landing">
+
+            {% if pred %}
+            {% if img_obj.mel_class == "melanoma" %}
+            <div class="alert alert-danger" role="alert">
+                {{ pred }}
+            </div>
+            {% else %}
+            <div class="alert alert-success" role="alert">
+                {{ pred }}
+            </div>
+            {% endif %}
+            {% endif %}
+
+            <div class="landing-2 form-control mt-5">
+
+                <div class="img">
+                    {% if img_obj %}
+                    <img src="{{ img_obj.image.url }}" alt="">
+                    {% endif %}
+                </div>
+                
+                <div class="other">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input class=" form-control" type="file" name="image" id="" required>
+                        <button class="btn btn-primary mt-2" type="submit">Upload</button>
+                      </form>
+                      {% if img_obj %}
+                      <form method="post" action=" {% url 'predict' img_obj.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-primary mt-2" type="submit">Predict</button>
+                    </form>
+                    {% else %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <span class="d-inline-block w-100" tabindex="0" data-toggle="tooltip" title="Disabled button: Upload an image to enable button">
+                            <button class="btn btn-outline-primary mt-2 w-100 " type="submit" style="pointer-events: none;" disabled>Predict</button>
+                          </span>
+                    </form>
+                    {% endif %}
+                    <a href="{% url 'home' %}" class="text-decoration-none text-center mt-2"> ⟵ Back to home</a>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        
+    
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

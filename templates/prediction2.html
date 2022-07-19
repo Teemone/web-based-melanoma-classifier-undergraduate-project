@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Document</title>
+
+
+    {% block style %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+        
+        body{
+            height: 100vh;
+            background: #eee;
+        }
+        .something{
+            font-family: 'Roboto', sans-serif;
+
+        }
+
+        .nunito{
+            font-family: 'Nunito', sans-serif;
+
+        }
+
+        nav + .container{
+            height: 80vh ;
+        }
+
+        .landing{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .landing-2{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .other{
+            display: flex;
+            flex-direction: column;
+            margin-top: 2.5rem;
+            width: 80%;
+        }
+
+        .img{
+            display: flex;
+            width: 80%;
+            height: 40%;
+            border: 1px solid #eee;
+        }
+
+        .img img{
+            width: 100%;
+        }
+
+        .other input, .other button, .other a{
+            width: 100%;
+        }
+
+
+        /* MEDIA QUERY */
+        @media (min-width:991px)  { 
+
+            .landing-2{
+                display: grid;
+                grid-template-columns: 2fr 2fr;
+                gap: 1rem;
+                width: 60%;
+            }
+
+            .other{
+                display: flex;
+                justify-content: center;
+                margin: 0;
+                width: 100%;
+                
+            }
+
+           
+            .img{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 auto;
+                width: 100%;
+
+            }
+
+            .img img{
+                width: 80%;
+            }
+
+        }
+
+
+    </style>
+    {% endblock %}
+
+    
+
+</head>
+<body>
+
+    <div class="container">
+
+        {% block content %}
+        <div class="landing">
+            <div class="landing-2 form-control mt-5">
+                {% if img_obj %}
+                <div class="img">
+                    <img src="{{ img_obj.image.url }}" alt="">
+                </div>
+                {% endif %}
+                <div class="other">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input class=" form-control" type="file" name="image" id="">
+                        <button class="btn btn-primary mt-2" type="submit">Upload</button>
+                      </form>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        
+    
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

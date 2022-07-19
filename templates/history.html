@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+
+    *{
+        text-transform: capitalize;
+    }
+    .card{
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        width: 50%;
+        border-radius: 6px;
+        border: 1px solid black;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem auto;
+    }
+
+    .graphic{
+        display: flex;
+        align-items: center;
+        width: 8rem;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    img{
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <a href="{% url 'home' %}"> Home </a>
+    {% if user.is_authenticated %}
+    {% for obj in img_obj %}
+        <div class="card">
+            <p>Uploaded by: {{ obj.uploaded_by.username }}</p>
+        <p>Email: {{ obj.uploaded_by.email }}</p>
+        <p>Date: {{ obj.upload_date }}</p>
+        <p>Result: {{ obj.mel_class }} </p>
+        <div class="graphic">
+            <img src="{{ obj.image.url }}" alt="NO vex">
+        </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+{% endblock %}

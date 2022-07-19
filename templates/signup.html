@@ -1,0 +1,22 @@
+
+
+<h2>Sign up</h2>
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Sign up</button>
+</form>
+
+<style>
+    input{
+        display: block;
+        width: 100%;
+        border: 1px solid #ced4da;
+        padding: .375rem 0.75rem;
+        border-radius: .375rem;    
+    }
+    p{
+        border: 1px solid black;
+        padding: 1rem;
+    }
+</style>

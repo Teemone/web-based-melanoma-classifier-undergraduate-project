@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Pix2Knowledge</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+        
+        *{
+            user-select: none;
+        }
+
+        body{
+            font-family: 'Nunito', sans-serif;
+        }
+    </style>
+    {% block style %}
+    {% endblock %}
+</head>
+<body {% block attr %}{% endblock %}>
+
+    <nav class="navbar navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand nunito fw-normal" href="{% url 'home' %}">Pix<span class="fw-bolder" >2</span>Knowledge</a>
+            <div class="dropdown">
+                
+            {% if user.is_authenticated %}
+
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Welcome, <span class="">{{ user.username|truncatechars:10|upper }}!</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown">
+                <li><a class="dropdown-item " href="{% url 'home' %}">Home</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item " href="{% url 'upload' %}">New</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item " href="{% url 'profile' %}">My profile</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+            </ul>
+
+            {% else %}
+
+            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                You're not logged in
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdown">
+                <li><a class="dropdown-item " href="{% url 'home' %}">Home</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item " href="{% url 'upload' %}">New</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item " href="{% url 'login' %}">Log in</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="{% url 'signup' %}">Sign up</a></li>
+            </ul>
+
+            {% endif %}
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container main-body">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script>
+        let prof = document.getElementById("profile");
+
+        function activePage(){
+          prof.style.background = 'rgb(236, 236, 236)'
+        }
+
+        
+    </script>
+
+</body>
+</html>
